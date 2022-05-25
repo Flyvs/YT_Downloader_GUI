@@ -1,6 +1,6 @@
 from pytube import YouTube
 import tkinter as tk
-
+import os
 
 window = tk.Tk()
 window.resizable(False, False)
@@ -20,10 +20,9 @@ label_error = tk.Label(window)
 label_info = tk.Label(window)
 entry_link = tk.Entry(window)
 entry_location = tk.Entry(window)
-button_down = tk.Button(window)
+button_downmp4 = tk.Button(window)
 button_reset = tk.Button(window)
 button_clear = tk.Button(window)
-button_quit = tk.Button(window)
 
 
 def organize_length(seconds):
@@ -60,18 +59,18 @@ def organize_length(seconds):
     return value
 
 
-def download_vid():
+def download_mp4():
     try:
         vid_link = entry_link.get()
-        yt = YouTube(vid_link)
-        ys = yt.streams.get_highest_resolution()
         location = entry_location.get()
+        yt = YouTube(vid_link)
         if len(entry_location.get()) == 0:
             label_error.configure(justify=tk.LEFT, text="Oops! Something went wrong!")
         else:
+            ys = yt.streams.get_highest_resolution()
             ys.download(location)
             entry_link.delete(0, tk.END)
-            label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in your Downloads folder.")
+            label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in a folder named Downloads.\nYou will find it where ever you saved your .exe.")
             title = f"Title:\n{yt.title}"
             numviews = f"\nNumber of views:\n{yt.views}"
             len_of_vid = organize_length(yt.length)
@@ -81,7 +80,7 @@ def download_vid():
 
 
 def reset():
-    label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in your Downloads folder.")
+    label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in a folder named Downloads.\nYou will find it where ever you saved your .exe.")
     label_info.configure(justify=tk.LEFT, text="Information about the video:", bg="lightblue")
     entry_link.delete(0, tk.END)
     entry_location.delete(0, tk.END)
@@ -100,7 +99,7 @@ def unhover(e):
 label_link.configure(justify=tk.LEFT, text="Paste the link here: \n\nPaste the location here:", bg="lightblue")
 label_link.place(x=10, y=10)
 
-label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in your Downloads folder.", bg="lightblue")
+label_error.configure(justify=tk.LEFT, text="By default your video is downloaded in a folder named Downloads.\nYou will find it where ever you saved your .exe.", bg="lightblue")
 label_error.place(x=10, y=110)
 
 label_info.configure(justify=tk.LEFT, text="Information about the video:", bg="lightblue")
@@ -113,24 +112,19 @@ entry_location.insert(1, "Downloads")
 entry_location.configure(width=46, foreground="white", background="#3b6275")
 entry_location.place(x=140, y=42)
 
-button_down.configure(width= 10, background="#6fb7d9", text="Download", command=lambda: download_vid())
-button_down.place(x=10, y=80)
-button_down.bind('<Enter>', hover)
-button_down.bind('<Leave>', unhover)
+button_downmp4.configure(width= 15, background="#6fb7d9", text="Download MP4", command=lambda: download_mp4())
+button_downmp4.place(x=10, y=80)
+button_downmp4.bind('<Enter>', hover)
+button_downmp4.bind('<Leave>', unhover)
 
 button_reset.configure(width= 10, background="#6fb7d9", text="Reset", command=lambda: reset())
-button_reset.place(x=100, y=80)
+button_reset.place(x=130, y=80)
 button_reset.bind('<Enter>', hover)
 button_reset.bind('<Leave>', unhover)
 
 button_clear.configure(width= 10, background="#6fb7d9", text="Clear", command=lambda: clear())
-button_clear.place(x=190, y=80)
+button_clear.place(x=215, y=80)
 button_clear.bind('<Enter>', hover)
 button_clear.bind('<Leave>', unhover)
-
-button_quit.configure(width= 10, background="#ff5c5c", text="Quit", command=lambda: quit())
-button_quit.place(x=700, y=160)
-button_quit.bind('<Enter>', hover)
-button_quit.bind('<Leave>', unhover)
 
 window.mainloop()
