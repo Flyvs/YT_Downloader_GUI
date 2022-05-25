@@ -5,7 +5,7 @@ import tkinter as tk
 window = tk.Tk()
 window.resizable(False, False)
 window.title("YouTube Downloader")
-window.iconphoto(False, tk.PhotoImage(file='path\to\file'))
+window.iconphoto(False, tk.PhotoImage(file='F:\programming\PYprojects\YTDownload\ytdownload.png'))
 window.configure(bg="lightblue")
 w = 800
 h = 200
